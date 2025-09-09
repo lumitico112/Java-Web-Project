@@ -1,0 +1,60 @@
+/* Estilos personalizados */
+body {
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-body {
+    padding: 40px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-control {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: #7c5239;
+    box-shadow: 0 0 0 3px rgba(124, 82, 57, 0.1);
+}
+
+.btn-dark {
+    background-color: #7c5239;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-dark:hover {
+    background-color: #6a422d;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.max-w-400 {
+    max-width: 400px;
+}
