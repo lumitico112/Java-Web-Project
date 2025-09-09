@@ -1,60 +1,211 @@
-/* Estilos personalizados */
-body {
-    background-color: #f5f5f5;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Estilos personalizados para la cafetería */
+
+/* Variables CSS para colores temáticos */
+:root {
+    --coffee-primary: #8B4513;
+    --coffee-secondary: #D2B48C;
+    --coffee-accent: #F4E4BC;
+    --coffee-dark: #5D2E0A;
+    --coffee-light: #F5E6D3;
 }
 
+/* Fondo general con tema de café */
+.bg-coffee {
+    background: linear-gradient(135deg,
+    var(--coffee-light) 0%,
+    var(--coffee-accent) 50%,
+    var(--coffee-secondary) 100%);
+    min-height: 100vh;
+    position: relative;
+}
+
+.bg-coffee::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" font-size="20" opacity="0.1">☕</text></svg>');
+    background-size: 100px 100px;
+    pointer-events: none;
+}
+
+/* Personalización de la tarjeta principal */
 .card {
-    border-radius: 20px;
-    background-color: white;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-header.bg-primary {
+    background: linear-gradient(135deg, var(--coffee-primary), var(--coffee-dark)) !important;
+    border-bottom: 3px solid var(--coffee-accent);
+}
+
+/* Estilo de iconos en el encabezado */
+.card-header .fa-coffee {
+    color: var(--coffee-accent);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Estilos para los campos del formulario */
+.form-control, .form-select {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--coffee-primary);
+    box-shadow: 0 0 0 0.25rem rgba(139, 69, 19, 0.25);
+    background: rgba(255, 255, 255, 1);
+}
+
+.form-control:hover, .form-select:hover {
+    border-color: var(--coffee-secondary);
+    background: rgba(255, 255, 255, 1);
+}
+
+/* Etiquetas de formulario */
+.form-label {
+    color: var(--coffee-dark);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-label i {
+    color: var(--coffee-primary);
+    width: 20px;
+}
+
+/* Botones personalizados */
+.btn-primary {
+    background: linear-gradient(135deg, var(--coffee-primary), var(--coffee-dark));
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--coffee-dark), var(--coffee-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(139, 69, 19, 0.4);
+}
+
+.btn-outline-secondary {
+    border: 2px solid var(--coffee-secondary);
+    color: var(--coffee-primary);
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    background: var(--coffee-secondary);
+    border-color: var(--coffee-secondary);
+    color: var(--coffee-dark);
+    transform: translateY(-2px);
+}
+
+/* Switch personalizado */
+.form-check-input:checked {
+    background-color: var(--coffee-primary);
+    border-color: var(--coffee-primary);
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(139, 69, 19, 0.25);
+}
+
+/* Texto de ayuda */
+.form-text {
+    color: var(--coffee-secondary);
+    font-size: 0.875rem;
+}
+
+/* Footer de la tarjeta */
+.card-footer {
+    background: rgba(245, 230, 211, 0.8) !important;
+    border-top: 1px solid var(--coffee-accent);
+}
+
+/* Animación para campos requeridos */
+.form-control:required:invalid {
+    background-image: linear-gradient(45deg, transparent 40%, rgba(255, 0, 0, 0.1) 50%, transparent 60%);
+}
+
+.form-control:required:valid {
+    background-image: linear-gradient(45deg, transparent 40%, rgba(0, 255, 0, 0.1) 50%, transparent 60%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 2rem !important;
+    }
+
+    .card-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .fa-coffee {
+        font-size: 2rem !important;
+    }
+}
+
+/* Efectos de hover para toda la tarjeta */
+.card {
+    transition: all 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(139, 69, 19, 0.2);
 }
 
-.card-body {
-    padding: 40px;
+/* Estilo para mensajes de validación */
+.invalid-feedback {
+    color: #dc3545;
+    font-weight: 500;
 }
 
-.form-label {
-    font-weight: 600;
-    color: #333;
+.valid-feedback {
+    color: var(--coffee-primary);
+    font-weight: 500;
 }
 
-.form-control {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 1rem;
-    transition: all 0.3s;
+/* Animación de carga */
+.loading {
+    position: relative;
 }
 
-.form-control:focus {
-    border-color: #7c5239;
-    box-shadow: 0 0 0 3px rgba(124, 82, 57, 0.1);
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top-color: var(--coffee-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
-.btn-dark {
-    background-color: #7c5239;
-    border: none;
-    color: white;
-    font-weight: bold;
-    padding: 12px;
-    font-size: 1.1rem;
-    transition: background-color 0.3s;
-}
-
-.btn-dark:hover {
-    background-color: #6a422d;
-}
-
-.text-muted {
-    color: #6c757d;
-}
-
-.max-w-400 {
-    max-width: 400px;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

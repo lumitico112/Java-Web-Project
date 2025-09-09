@@ -123,9 +123,6 @@ public class EmpleadoDAOImpl implements EmpleadoDAO {
         }
     }
 
-    // =====================
-    // Auxiliar
-    // =====================
     private Empleado mapEmpleado(ResultSet rs) throws SQLException {
         Empleado e = new Empleado();
         e.setEmpleadoId(rs.getString("empleado_id"));

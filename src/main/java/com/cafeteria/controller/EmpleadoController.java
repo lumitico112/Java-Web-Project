@@ -38,7 +38,13 @@ public class EmpleadoController extends HttpServlet{
                         eliminar(request, response);
                         break;
                     case "nuevo":
-                        request.getRequestDispatcher("/WEB-INF/views/empleado-form.jsp").forward(request, response);
+                        request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+                        break;
+                    case "registro":
+                        request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+                        break;
+                    case "login":
+                        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
                         break;
                     default:
                         listar(request, response);
@@ -47,6 +53,10 @@ public class EmpleadoController extends HttpServlet{
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
+            request.setAttribute("exception", e);
+            java.io.StringWriter sw = new java.io.StringWriter();
+            e.printStackTrace(new java.io.PrintWriter(sw));
+            request.setAttribute("stackTrace", sw.toString());
             request.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(request, response);
         }
     }
@@ -70,6 +80,10 @@ public class EmpleadoController extends HttpServlet{
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
+            request.setAttribute("exception", e);
+            java.io.StringWriter sw = new java.io.StringWriter();
+            e.printStackTrace(new java.io.PrintWriter(sw));
+            request.setAttribute("stackTrace", sw.toString());
             request.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(request, response);
         }
     }
@@ -93,12 +107,12 @@ public class EmpleadoController extends HttpServlet{
         empleado.setUsuario(request.getParameter("usuario"));
         empleado.setCorreo(request.getParameter("correo"));
         empleado.setContrasenaHash(request.getParameter("contrasena")); // el Service la encripta
-        empleado.setRol(Rol.valueOf(request.getParameter("rol").toUpperCase()));
+        empleado.setRol(parseRol(request.getParameter("rol")));
         empleado.setEstado(true);
         empleado.setFechaRegistro(LocalDate.now());
 
         empleadoService.registrarEmpleado(empleado);
-        response.sendRedirect("EmpleadoController?action=listar");
+        response.sendRedirect(request.getContextPath() + "/controller/EmpleadoController?action=login");
     }
 
     private void mostrarEditar(HttpServletRequest request, HttpServletResponse response)
@@ -117,18 +131,34 @@ public class EmpleadoController extends HttpServlet{
         empleado.setUsuario(request.getParameter("usuario"));
         empleado.setCorreo(request.getParameter("correo"));
         empleado.setContrasenaHash(request.getParameter("contrasena")); // el Service la encripta
-        empleado.setRol(Rol.valueOf(request.getParameter("rol").toUpperCase()));
+        empleado.setRol(parseRol(request.getParameter("rol")));
         empleado.setEstado(Boolean.parseBoolean(request.getParameter("estado")));
         empleado.setFechaRegistro(LocalDate.parse(request.getParameter("fechaRegistro")));
 
         empleadoService.actualizarEmpleado(empleado);
-        response.sendRedirect("EmpleadoController?action=listar");
+        response.sendRedirect(request.getContextPath() + "/controller/EmpleadoController?action=listar");
     }
 
     private void eliminar(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         String id = request.getParameter("id");
         empleadoService.eliminarEmpleado(id);
-        response.sendRedirect("EmpleadoController?action=listar");
+        response.sendRedirect(request.getContextPath() + "/controller/LoginController?action=login");
+    }
+
+    private Rol parseRol(String rolParam) {
+        if (rolParam == null) {
+            throw new IllegalArgumentException("Rol no proporcionado");
+        }
+        String v = rolParam.trim().toUpperCase();
+        switch (v) {
+            case "ADMINISTRADOR":
+            case "ADMIN":
+                return Rol.ADMINISTRADOR;
+            case "EMPLEADO":
+                return Rol.EMPLEADO;
+            default:
+                throw new IllegalArgumentException("Rol inválido: " + rolParam);
+        }
     }
 }
