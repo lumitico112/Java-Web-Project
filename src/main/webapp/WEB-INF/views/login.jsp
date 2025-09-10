@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -89,8 +91,29 @@
                             <p class="text-coffee-primary">Ingresa a tu cuenta de Cafetería El Aroma</p>
                         </div>
 
+                        <!-- Mensajes de error -->
+                        <c:if test="${not empty loginErrorUsuario}">
+                            <div class="alert alert-warning" role="alert">
+                                <i class="fas fa-user-times me-2"></i>
+                                <c:out value="${loginErrorUsuario}"/>
+                            </div>
+                        </c:if>
+                        <c:if test="${not empty loginErrorContrasena}">
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-lock me-2"></i>
+                                <c:out value="${loginErrorContrasena}"/>
+                            </div>
+                        </c:if>
+                        <c:if test="${not empty loginError}">
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <c:out value="${loginError}"/>
+                            </div>
+                        </c:if>
+
                         <!-- Login Form -->
-                        <form id="loginForm" class="login-form">
+                        <form id="loginForm" class="login-form" method="post" action="${pageContext.request.contextPath}/controller/LoginController">
+                            <input type="hidden" name="action" value="login"/>
                             <!-- Usuario o Email -->
                             <div class="mb-4">
                                 <label for="loginUser" class="form-label fw-bold">

@@ -63,7 +63,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/controller/EmpleadoController?action=nuevo">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/controller/LoginController?action=registro">
                         <i class="fas fa-user-plus me-1"></i>Registro Empleados
                     </a>
                 </li>

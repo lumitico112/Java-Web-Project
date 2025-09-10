@@ -60,55 +60,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Manejo del envío del formulario
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-// JS del Login - Cafetería El Aroma
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('loginForm');
-    const passwordInput = document.getElementById('loginPassword');
-    const toggleBtn = document.getElementById('toggleLoginPassword');
-
-    // Mostrar/ocultar contraseña
-    if (toggleBtn && passwordInput) {
-        toggleBtn.addEventListener('click', function () {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            const icon = this.querySelector('i');
-            if (icon) {
-                icon.classList.toggle('fa-eye');
-                icon.classList.toggle('fa-eye-slash');
-            }
-        });
-    }
-
-    // Validación del formulario
-    if (form) {
-        form.addEventListener('submit', function (e) {
-            if (!form.checkValidity()) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        });
-    }
-});
-        // Validar campos
-        if (!loginForm.checkValidity()) {
-            e.stopPropagation();
-            loginForm.classList.add('was-validated');
-            return;
-        }
-
-        const userData = {
-            user: userInput.value.trim(),
-            password: passwordInput.value,
-            remember: rememberCheckbox.checked
-        };
-
+    // Nota: No usamos e.preventDefault() para permitir que el form llegue al servlet
+    loginForm.addEventListener('submit', function() {
         // Guardar preferencia de recordar usuario
-        if (userData.remember) {
+        if (rememberCheckbox.checked) {
             localStorage.setItem('rememberUser', 'true');
-            localStorage.setItem('savedUser', userData.user);
+            localStorage.setItem('savedUser', userInput.value.trim());
         } else {
             localStorage.removeItem('rememberUser');
             localStorage.removeItem('savedUser');
@@ -119,46 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Iniciando sesión...';
         submitBtn.disabled = true;
-
-        // Simular proceso de autenticación
-        setTimeout(() => {
-            // Aquí iría la lógica real de autenticación
-            const isValidLogin = validateCredentials(userData.user, userData.password);
-
-            if (isValidLogin) {
-                showSuccessMessage();
-                // Redireccionar después del login exitoso
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
-            } else {
-                showErrorMessage();
-                // Resetear botón
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-
-                // Limpiar contraseña por seguridad
-                passwordInput.value = '';
-                passwordInput.classList.remove('is-valid', 'is-invalid');
-            }
-        }, 2000);
+        // Nota: El submit real se realiza aquí, no necesitamos setTimeout ni validación simulada
     });
-
-    // Función simulada de validación (en producción sería una llamada al servidor)
-    function validateCredentials(user, password) {
-        // Credenciales de prueba para demostración
-        const validCredentials = [
-            { user: 'admin', password: 'admin123' },
-            { user: 'empleado', password: 'emp123' },
-            { user: 'gerente@elaroma.com', password: 'gerente123' },
-            { user: 'barista', password: 'barista123' }
-        ];
-
-        return validCredentials.some(cred =>
-            (cred.user === user || cred.user === user.toLowerCase()) &&
-            cred.password === password
-        );
-    }
 
     // Función para mostrar mensaje de éxito
     function showSuccessMessage() {
@@ -170,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function () {
             <strong>¡Bienvenido!</strong> Login exitoso. Redirigiendo...
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         `;
-
         document.body.appendChild(alert);
 
         // Remover automáticamente después de 3 segundos
@@ -191,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function () {
             <strong>Error:</strong> Usuario o contraseña incorrectos.
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         `;
-
         document.body.appendChild(alert);
 
         // Remover automáticamente después de 4 segundos
@@ -238,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Mostrar credenciales de prueba
+    // Mostrar credenciales de prueba (solo visual)
     setTimeout(() => {
         const credentialsInfo = document.createElement('div');
         credentialsInfo.className = 'position-fixed bottom-0 start-0 p-3';
@@ -258,7 +175,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             </div>
         `;
-
         document.body.appendChild(credentialsInfo);
 
         // Auto-remove después de 8 segundos
@@ -273,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && document.activeElement.tagName !== 'BUTTON') {
             if (userInput.value && passwordInput.value) {
-                loginForm.dispatchEvent(new Event('submit'));
+                loginForm.submit(); // envía al servlet
             }
         }
     });

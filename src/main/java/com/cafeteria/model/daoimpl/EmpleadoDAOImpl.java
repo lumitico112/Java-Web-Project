@@ -4,7 +4,6 @@ import com.cafeteria.config.Conexion;
 import com.cafeteria.model.dao.EmpleadoDAO;
 import com.cafeteria.model.entity.Empleado;
 import com.cafeteria.model.enums.Rol;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -99,12 +98,10 @@ public class EmpleadoDAOImpl implements EmpleadoDAO {
         try (Connection conn = Conexion.getConection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            String hashPassword = BCrypt.hashpw(empleado.getContrasenaHash(), BCrypt.gensalt());
-
             stmt.setString(1, empleado.getNombre());
             stmt.setString(2, empleado.getUsuario());
             stmt.setString(3, empleado.getCorreo());
-            stmt.setString(4, hashPassword);
+            stmt.setString(4, empleado.getContrasenaHash());
             stmt.setString(5, empleado.getRol().name());
             stmt.setBoolean(6, empleado.isEstado());
             stmt.setString(7, empleado.getEmpleadoId());

@@ -13,7 +13,15 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
     @Override
     public void registrarEmpleado(Empleado empleado) throws Exception {
-        // Validación previa en el servicio (opcional)
+        // Normalizar datos
+        if (empleado.getUsuario() != null) {
+            empleado.setUsuario(empleado.getUsuario().trim().toLowerCase());
+        }
+        if (empleado.getCorreo() != null) {
+            empleado.setCorreo(empleado.getCorreo().trim().toLowerCase());
+        }
+
+        // Validación previa en el servicio
         if (empleadoDAO.buscarPorId(empleado.getEmpleadoId()) != null) {
             throw new Exception("El ID ya está registrado.");
         }
@@ -31,8 +39,56 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         // Insertar
         empleadoDAO.insertar(empleado);
     }
+
     @Override
     public void actualizarEmpleado(Empleado empleado) throws Exception {
+        // Normalizar usuario/correo
+        if (empleado.getUsuario() != null) {
+            empleado.setUsuario(empleado.getUsuario().trim().toLowerCase());
+        }
+        if (empleado.getCorreo() != null) {
+            empleado.setCorreo(empleado.getCorreo().trim().toLowerCase());
+        }
+
+        // Si no se envía nueva contraseña, mantener el hash actual de la BD
+        if (empleado.getContrasenaHash() == null || empleado.getContrasenaHash().isBlank()) {
+            Empleado existente = empleadoDAO.buscarPorId(empleado.getEmpleadoId());
+            if (existente == null) {
+                throw new Exception("Empleado no encontrado para actualizar: " + empleado.getEmpleadoId());
+            }
+            empleado.setContrasenaHash(existente.getContrasenaHash());
+        } else {
+            // Si se envía nueva contraseña en texto plano, encriptar aquí
+            String hashPassword = BCrypt.hashpw(empleado.getContrasenaHash(), BCrypt.gensalt());
+            empleado.setContrasenaHash(hashPassword);
+        }
+
+        // Si no se envía nueva contraseña, mantener el hash actual de la BD
+        if (empleado.getContrasenaHash() == null || empleado.getContrasenaHash().isBlank()) {
+            Empleado existente = empleadoDAO.buscarPorId(empleado.getEmpleadoId());
+            if (existente == null) {
+                throw new Exception("Empleado no encontrado para actualizar: " + empleado.getEmpleadoId());
+            }
+            empleado.setContrasenaHash(existente.getContrasenaHash());
+        } else {
+            // Si se envía nueva contraseña en texto plano, encriptar aquí
+            String hashPassword = BCrypt.hashpw(empleado.getContrasenaHash(), BCrypt.gensalt());
+            empleado.setContrasenaHash(hashPassword);
+        }
+
+        // Si no se envía nueva contraseña, mantener el hash actual de la BD
+        if (empleado.getContrasenaHash() == null || empleado.getContrasenaHash().isBlank()) {
+            Empleado existente = empleadoDAO.buscarPorId(empleado.getEmpleadoId());
+            if (existente == null) {
+                throw new Exception("Empleado no encontrado para actualizar: " + empleado.getEmpleadoId());
+            }
+            empleado.setContrasenaHash(existente.getContrasenaHash());
+        } else {
+            // Si se envía una nueva contraseña en texto plano, encriptarla
+            String hashPassword = BCrypt.hashpw(empleado.getContrasenaHash(), BCrypt.gensalt());
+            empleado.setContrasenaHash(hashPassword);
+        }
+
         empleadoDAO.actualizar(empleado);
     }
 
