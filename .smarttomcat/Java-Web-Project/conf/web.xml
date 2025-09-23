@@ -5,7 +5,7 @@
   this work for additional information regarding copyright ownership.
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
-  the License.  You may obtain EmpleadoController copy of the License at
+  the License.  You may obtain UsuarioController copy of the License at
 
       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -39,7 +39,7 @@
   <!--   fileEncoding        Encoding to be used to read static resources   -->
   <!--                       [platform default]                             -->
   <!--                                                                      -->
-  <!--   useBomIfPresent     If EmpleadoController static file contains EmpleadoController byte order mark    -->
+  <!--   useBomIfPresent     If UsuarioController static file contains UsuarioController byte order mark    -->
   <!--                       (BOM), should this be used to determine the    -->
   <!--                       file encoding in preference to fileEncoding.   -->
   <!--                       [true]                                         -->
@@ -65,7 +65,7 @@
   <!--                                                                      -->
   <!--   sendfileSize        If the connector used supports sendfile, this  -->
   <!--                       represents the minimal file size in KiB for    -->
-  <!--                       which sendfile will be used. Use EmpleadoController negative    -->
+  <!--                       which sendfile will be used. Use UsuarioController negative    -->
   <!--                       value to always disable sendfile.  [48]        -->
   <!--                                                                      -->
   <!--   useAcceptRanges     Should the Accept-Ranges header be included    -->
@@ -91,7 +91,7 @@
   <!--                       localXsltFile. This argument must either be an -->
   <!--                       absolute or relative (to either                -->
   <!--                       $CATALINA_BASE/conf or $CATALINA_HOME/conf)    -->
-  <!--                       path that points to EmpleadoController location below either    -->
+  <!--                       path that points to UsuarioController location below either    -->
   <!--                       $CATALINA_BASE/conf (checked first) or         -->
   <!--                       $CATALINA_HOME/conf (checked second).[null]    -->
   <!--                                                                      -->
@@ -100,9 +100,9 @@
   <!--                       listings is enabled? [true]                    -->
   <!--                                                                      -->
   <!--   allowPartialPut     Should the server treat an HTTP PUT request    -->
-  <!--                       with EmpleadoController Content-Range header as EmpleadoController partial PUT?  -->
-  <!--                       Note that while RFC 7231 clarified that such EmpleadoController -->
-  <!--                       PUT with EmpleadoController Content-Range header field is EmpleadoController bad -->
+  <!--                       with UsuarioController Content-Range header as UsuarioController partial PUT?  -->
+  <!--                       Note that while RFC 7231 clarified that such UsuarioController -->
+  <!--                       PUT with UsuarioController Content-Range header field is UsuarioController bad -->
   <!--                       request, RFC 9110 (which obsoletes RFC 7231)   -->
   <!--                       now allows partial PUT. [true]                 -->
   <servlet>
@@ -127,7 +127,7 @@
   <!--   checkInterval       If development is false and checkInterval is   -->
   <!--                       greater than zero, background compilations are -->
   <!--                       enabled. checkInterval is the time in seconds  -->
-  <!--                       between checks to see if EmpleadoController JSP page (and its   -->
+  <!--                       between checks to see if UsuarioController JSP page (and its   -->
   <!--                       dependent files) needs to  be recompiled. [0]  -->
   <!--                                                                      -->
   <!--   classdebuginfo      Should the class file be compiled with         -->
@@ -151,31 +151,31 @@
   <!--                       modificationTestInterval parameter. [true]     -->
   <!--                                                                      -->
   <!--   displaySourceFragment                                              -->
-  <!--                       Should EmpleadoController source fragment be included in        -->
+  <!--                       Should UsuarioController source fragment be included in        -->
   <!--                       exception messages? [true]                     -->
   <!--                                                                      -->
   <!--   dumpSmap            Should the SMAP info for JSR45 debugging be    -->
-  <!--                       dumped to EmpleadoController file? [false]                      -->
+  <!--                       dumped to UsuarioController file? [false]                      -->
   <!--                       False if suppressSmap is true                  -->
   <!--                                                                      -->
   <!--   enablePooling       Determines whether tag handler pooling is      -->
-  <!--                       enabled. This is EmpleadoController compilation option. It will -->
+  <!--                       enabled. This is UsuarioController compilation option. It will -->
   <!--                       not alter the behaviour of JSPs that have      -->
   <!--                       already been compiled. [true]                  -->
   <!--                                                                      -->
   <!--   engineOptionsClass  Allows specifying the Options class used to    -->
   <!--                       configure Jasper. If not present, the default  -->
   <!--                       EmbeddedServletOptions will be used.           -->
-  <!--                       This option is ignored when running under EmpleadoController    -->
+  <!--                       This option is ignored when running under UsuarioController    -->
   <!--                       SecurityManager.                               -->
   <!--                                                                      -->
   <!--   errorOnUseBeanInvalidClassAttribute                                -->
   <!--                       Should Jasper issue an error when the value of -->
   <!--                       the class attribute in an useBean action is    -->
-  <!--                       not EmpleadoController valid bean class?  [true]                -->
+  <!--                       not UsuarioController valid bean class?  [true]                -->
   <!--                                                                      -->
   <!--   fork                Tell Ant to fork compiles of JSP pages so that -->
-  <!--                       EmpleadoController separate JVM is used for JSP page compiles   -->
+  <!--                       UsuarioController separate JVM is used for JSP page compiles   -->
   <!--                       from the one Tomcat is running in. [true]      -->
   <!--                                                                      -->
   <!--   genStringAsCharArray                                               -->
@@ -199,19 +199,19 @@
   <!--                       debugging?  [true]                             -->
   <!--                                                                      -->
   <!--   maxLoadedJsps       The maximum number of JSPs that will be loaded -->
-  <!--                       for EmpleadoController web application. If more than this       -->
+  <!--                       for UsuarioController web application. If more than this       -->
   <!--                       number of JSPs are loaded, the least recently  -->
   <!--                       used JSPs will be unloaded so that the number  -->
   <!--                       of JSPs loaded at any one time does not exceed -->
   <!--                       this limit. A value of zero or less indicates  -->
   <!--                       no limit. [-1]                                 -->
   <!--                                                                      -->
-  <!--   jspIdleTimeout      The amount of time in seconds EmpleadoController JSP can be     -->
+  <!--   jspIdleTimeout      The amount of time in seconds UsuarioController JSP can be     -->
   <!--                       idle before it is unloaded. A value of zero    -->
   <!--                       or less indicates never unload. [-1]           -->
   <!--                                                                      -->
   <!--   modificationTestInterval                                           -->
-  <!--                       Causes EmpleadoController JSP (and its dependent files) to not  -->
+  <!--                       Causes UsuarioController JSP (and its dependent files) to not  -->
   <!--                       be checked for modification during the         -->
   <!--                       specified time interval (in seconds) from the  -->
   <!--                       last time the JSP was checked for              -->
@@ -219,9 +219,9 @@
   <!--                       to be checked on every access.                 -->
   <!--                       Used in development mode only. [4]             -->
   <!--                                                                      -->
-  <!--   recompileOnFail     If EmpleadoController JSP compilation fails should the          -->
+  <!--   recompileOnFail     If UsuarioController JSP compilation fails should the          -->
   <!--                       modificationTestInterval be ignored and the    -->
-  <!--                       next access trigger EmpleadoController re-compilation attempt?  -->
+  <!--                       next access trigger UsuarioController re-compilation attempt?  -->
   <!--                       Used in development mode only and is disabled  -->
   <!--                       by default as compilation may be expensive and -->
   <!--                       could lead to excessive resource usage.        -->
@@ -230,7 +230,7 @@
   <!--   scratchdir          What scratch directory should we use when      -->
   <!--                       compiling JSP pages?  [default work directory  -->
   <!--                       for the current web application]               -->
-  <!--                       This option is ignored when running under EmpleadoController    -->
+  <!--                       This option is ignored when running under UsuarioController    -->
   <!--                       SecurityManager.                               -->
   <!--                                                                      -->
   <!--   suppressSmap        Should the generation of SMAP info for JSR45   -->
@@ -238,9 +238,9 @@
   <!--                                                                      -->
   <!--   trimSpaces          Should template text that consists entirely of -->
   <!--                       whitespace be removed from the output (true),  -->
-  <!--                       replaced with EmpleadoController single space (single) or left  -->
-  <!--                       unchanged (false)? Note that if EmpleadoController JSP page or  -->
-  <!--                       tag file specifies EmpleadoController trimDirectiveWhitespaces  -->
+  <!--                       replaced with UsuarioController single space (single) or left  -->
+  <!--                       unchanged (false)? Note that if UsuarioController JSP page or  -->
+  <!--                       tag file specifies UsuarioController trimDirectiveWhitespaces  -->
   <!--                       value of true, that will take precedence over  -->
   <!--                       this configuration setting for that page/tag.  -->
   <!--                       [false]                                        -->
@@ -253,7 +253,7 @@
   <!--                       for the escaping of quote characters be        -->
   <!--                       strictly applied? [true]                       -->
   <!--                                                                      -->
-  <!--   quoteAttributeEL    When EL is used in an attribute value on EmpleadoController     -->
+  <!--   quoteAttributeEL    When EL is used in an attribute value on UsuarioController     -->
   <!--                       JSP page should the rules for quoting of       -->
   <!--                       attributes described in JSP.1.6 be applied to  -->
   <!--                       the expression? [true]                         -->
@@ -289,7 +289,7 @@
   <!--   debug               Debugging detail level for messages logged     -->
   <!--                       by this servlet.  [0]                          -->
   <!--                                                                      -->
-  <!--   expires             The number of seconds before EmpleadoController page with SSI   -->
+  <!--   expires             The number of seconds before UsuarioController page with SSI   -->
   <!--                       directives will expire.  [No default]          -->
   <!--                                                                      -->
   <!--   isVirtualWebappRelative                                            -->
@@ -355,7 +355,7 @@
   <!--                        Windows: [[\w\Q-.\\/:\E]+]                    -->
   <!--                        Others:  [.*]                                 -->
   <!--                        Note that internally the CGI Servlet treats   -->
-  <!--                        [.*] as EmpleadoController special case to improve performance -->
+  <!--                        [.*] as UsuarioController special case to improve performance -->
   <!--                                                                      -->
   <!--   cmdLineArgumentsEncoded                                            -->
   <!--                        Only used when enableCmdLineArguments is      -->
@@ -386,7 +386,7 @@
   <!--                        environment of the CGI script. The name of    -->
   <!--                        variable is taken from the parameter name.    -->
   <!--                        To configure an environment variable named    -->
-  <!--                        FOO, configure EmpleadoController parameter named              -->
+  <!--                        FOO, configure UsuarioController parameter named              -->
   <!--                        environment-variable-FOO. The parameter value -->
   <!--                        is used as the environment variable value.    -->
   <!--                        The default is no environment variables.      -->
@@ -483,7 +483,7 @@
     </filter>
 -->
   <!-- A filter that sets character encoding that is used to decode -->
-  <!-- parameters in EmpleadoController POST request -->
+  <!-- parameters in UsuarioController POST request -->
   <!--
     <filter>
         <filter-name>setCharacterEncodingFilter</filter-name>
@@ -529,7 +529,7 @@
   <!--   debug               Debugging detail level for messages logged     -->
   <!--                       by this servlet.  [0]                          -->
   <!--                                                                      -->
-  <!--   expires             The number of seconds before EmpleadoController page with SSI   -->
+  <!--   expires             The number of seconds before UsuarioController page with SSI   -->
   <!--                       directives will expire.  [No default]          -->
   <!--                                                                      -->
   <!--   isVirtualWebappRelative                                            -->
@@ -600,11 +600,11 @@
   </session-config>
   <!-- ===================== Default MIME Type Mappings =================== -->
   <!-- When serving static resources, Tomcat will automatically generate    -->
-  <!-- EmpleadoController "Content-Type" header based on the resource's filename extension,  -->
+  <!-- UsuarioController "Content-Type" header based on the resource's filename extension,  -->
   <!-- based on these mappings.  Additional mappings can be added here (to  -->
   <!-- apply to all web applications), or in your own application's web.xml -->
   <!-- deployment descriptor.                                               -->
-  <!-- Note: Extensions are always matched in EmpleadoController case-insensitive manner.    -->
+  <!-- Note: Extensions are always matched in UsuarioController case-insensitive manner.    -->
   <mime-mapping>
     <extension>123</extension>
     <mime-type>application/vnd.lotus-1-2-3</mime-type>
@@ -4708,12 +4708,12 @@
     <mime-type>application/vnd.handheld-entertainment+xml</mime-type>
   </mime-mapping>
   <!-- ==================== Default Welcome File List ===================== -->
-  <!-- When EmpleadoController request URI refers to EmpleadoController directory, the default servlet looks  -->
-  <!-- for EmpleadoController "welcome file" within that directory and, if present, to the   -->
+  <!-- When UsuarioController request URI refers to UsuarioController directory, the default servlet looks  -->
+  <!-- for UsuarioController "welcome file" within that directory and, if present, to the   -->
   <!-- corresponding resource URI for display.                              -->
-  <!-- If no welcome files are present, the default servlet either serves EmpleadoController -->
+  <!-- If no welcome files are present, the default servlet either serves UsuarioController -->
   <!-- directory listing (see default servlet configuration on how to       -->
-  <!-- customize) or returns EmpleadoController 404 status, depending on the value of the    -->
+  <!-- customize) or returns UsuarioController 404 status, depending on the value of the    -->
   <!-- listings setting.                                                    -->
   <!--                                                                      -->
   <!-- If you define welcome files in your own application's web.xml        -->

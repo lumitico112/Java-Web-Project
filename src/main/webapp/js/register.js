@@ -1,4 +1,4 @@
-// JavaScript para el formulario de registro de empleados
+// JavaScript para el formulario de registro de usuarios
 
 document.addEventListener('DOMContentLoaded', function() {
     // Referencias a elementos del DOM
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const togglePasswordBtn = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('contrasena');
     const confirmPasswordInput = document.getElementById('confirmarContrasena');
-    const empleadoIdInput = document.getElementById('empleadoId');
+    const usuarioIdInput = document.getElementById('usuarioId');
     const usuarioInput = document.getElementById('usuario');
     const correoInput = document.getElementById('correo');
 
@@ -56,8 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Validación de ID de empleado (formato: 3 letras + 3 números)
-    empleadoIdInput.addEventListener('input', function() {
+    // Validación de ID de usuario (formato: USR001, etc.)
+    usuarioIdInput.addEventListener('input', function() {
         const pattern = /^[A-Z]{3}\d{3}$/;
         this.value = this.value.toUpperCase();
 
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Validación de usuario (sin espacios, solo letras y números)
+    // Validación de usuario (sin espacios, solo letras, números y guiones bajos)
     usuarioInput.addEventListener('input', function() {
         const pattern = /^[a-zA-Z0-9_]+$/;
         this.value = this.value.toLowerCase().replace(/\s/g, '');
@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Manejo del envío del formulario
     form.addEventListener('submit', function(e) {
-        // Si el formulario es inválido, prevenir envío y mostrar validaciones
         if (!form.checkValidity()) {
             e.preventDefault();
             e.stopPropagation();
@@ -107,20 +106,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Validar que las contraseñas coincidan
         if (passwordInput.value !== confirmPasswordInput.value) {
             e.preventDefault();
             alert('Las contraseñas no coinciden');
             return;
         }
 
-        // Mostrar indicador de carga y deshabilitar botón
         const submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Procesando...';
         submitBtn.disabled = true;
-
-        // No llamar e.preventDefault() aquí: permitir envío real al servlet
-        // El servidor responderá con redirección o forward según corresponda
     });
 
     // Función para mostrar mensaje de éxito
@@ -130,13 +124,12 @@ document.addEventListener('DOMContentLoaded', function() {
         alert.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
         alert.innerHTML = `
             <i class="fas fa-check-circle me-2"></i>
-            <strong>¡Éxito!</strong> El empleado ha sido registrado correctamente.
+            <strong>¡Éxito!</strong> El usuario ha sido registrado correctamente.
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         `;
 
         document.body.appendChild(alert);
 
-        // Remover automáticamente después de 5 segundos
         setTimeout(() => {
             if (alert.parentNode) {
                 alert.remove();
@@ -144,20 +137,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     }
 
-    // Efectos visuales adicionales
+    // Efectos visuales en inputs
     const inputs = form.querySelectorAll('.form-control, .form-select');
     inputs.forEach(input => {
         input.addEventListener('focus', function() {
             this.closest('.mb-4').style.transform = 'scale(1.02)';
             this.closest('.mb-4').style.transition = 'transform 0.2s ease';
         });
-
         input.addEventListener('blur', function() {
             this.closest('.mb-4').style.transform = 'scale(1)';
         });
     });
 
-    // Auto-generar sugerencia de usuario basado en el nombre
+    // Autogenerar sugerencia de usuario
     const nombreInput = document.getElementById('nombre');
     nombreInput.addEventListener('blur', function() {
         if (this.value && !usuarioInput.value) {
@@ -172,9 +164,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Tooltip para ayuda en campos
+    // Tooltips de ayuda
     const tooltips = [
-        { element: empleadoIdInput, text: 'Formato: 3 letras + 3 números (ej: EMP001)' },
+        { element: usuarioIdInput, text: 'Formato: 3 letras + 3 números (ej: USR001)' },
         { element: usuarioInput, text: 'Solo letras, números y guión bajo. Mínimo 3 caracteres' },
         { element: passwordInput, text: 'Mínimo 8 caracteres, incluir mayúsculas, minúsculas y números' }
     ];
@@ -185,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
         tooltip.element.setAttribute('title', tooltip.text);
     });
 
-    // Inicializar tooltips de Bootstrap
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);

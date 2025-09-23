@@ -1,11 +1,8 @@
 package com.cafeteria.controller;
 
-import com.cafeteria.model.entity.Empleado;
-import com.cafeteria.model.serviceImpl.EmpleadoServiceImpl;
-import com.cafeteria.model.serviceImpl.LoginServiceImpl;
-import com.cafeteria.service.EmpleadoService;
+import com.cafeteria.entity.Usuario;
 import com.cafeteria.service.LoginService;
-import org.mindrot.jbcrypt.BCrypt;
+import com.cafeteria.serviceImpl.LoginServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +16,6 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
 
     private final LoginService loginService = new LoginServiceImpl();
-    private final EmpleadoService empleadoService = new EmpleadoServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -28,9 +24,9 @@ public class LoginController extends HttpServlet {
 
         try {
             if (action == null || "login".equalsIgnoreCase(action)) {
-                request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             } else if ("registro".equalsIgnoreCase(action)) {
-                request.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
             } else if ("logout".equalsIgnoreCase(action)) {
                 HttpSession session = request.getSession(false);
                 if (session != null) session.invalidate();
@@ -39,11 +35,7 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
             }
         } catch (Exception e) {
-            request.setAttribute("error", e.getMessage());
-            java.io.StringWriter sw = new java.io.StringWriter();
-            e.printStackTrace(new java.io.PrintWriter(sw));
-            request.setAttribute("stackTrace", sw.toString());
-            request.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(request, response);
+            manejarError(request, response, e);
         }
     }
 
@@ -54,67 +46,42 @@ public class LoginController extends HttpServlet {
 
         try {
             if ("login".equalsIgnoreCase(action)) {
-                String identifierRaw = request.getParameter("loginUser");
+                String identifier = request.getParameter("loginUser");
                 String password = request.getParameter("loginPassword");
 
-                if (identifierRaw == null || password == null) {
+                if (identifier == null || password == null) {
                     request.setAttribute("loginError", "Completa usuario/correo y contraseña.");
-                    request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
                     return;
                 }
 
-                String identifierNorm = identifierRaw.trim().toLowerCase();
+                Usuario usuario = loginService.autenticar(identifier, password);
 
-                // 1) Buscar usuario por usuario/correo (normalizado y crudo como compatibilidad)
-                Empleado candidato = empleadoService.buscarPorUsuario(identifierNorm);
-                if (candidato == null) candidato = empleadoService.buscarPorUsuario(identifierRaw);
-                if (candidato == null) candidato = empleadoService.buscarPorCorreo(identifierNorm);
-                if (candidato == null) candidato = empleadoService.buscarPorCorreo(identifierRaw);
-
-                if (candidato == null) {
-                    // Usuario/correo no existe en BD
-                    request.setAttribute("loginErrorUsuario", "El usuario o correo no existe.");
-                    request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+                if (usuario == null) {
+                    request.setAttribute("loginError", "Credenciales inválidas.");
+                    request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
                     return;
                 }
 
-                // 2) Validar hash de contraseña contra lo ingresado
-                String storedHash = candidato.getContrasenaHash();
-                if (storedHash == null || storedHash.length() < 55) {
-                    request.setAttribute("loginError", "Error interno: hash de contraseña inválido en BD.");
-                    request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-                    return;
-                }
-
-                boolean ok;
-                try {
-                    ok = BCrypt.checkpw(password, storedHash);
-                } catch (IllegalArgumentException ex) {
-                    request.setAttribute("loginError", "Error interno: formato de hash inválido en BD.");
-                    request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-                    return;
-                }
-
-                if (!ok) {
-                    // Contraseña incorrecta
-                    request.setAttribute("loginErrorContrasena", "Contraseña incorrecta.");
-                    request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
-                    return;
-                }
-
-                // 3) Autenticación correcta: crear sesión y redirigir
+                // 🔹 Autenticación correcta
                 HttpSession session = request.getSession(true);
-                session.setAttribute("empleado", candidato);
+                session.setAttribute("usuario", usuario);
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
+
             } else {
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
             }
         } catch (Exception e) {
-            request.setAttribute("error", e.getMessage());
-            java.io.StringWriter sw = new java.io.StringWriter();
-            e.printStackTrace(new java.io.PrintWriter(sw));
-            request.setAttribute("stackTrace", sw.toString());
-            request.getRequestDispatcher("/WEB-INF/views/error.jsp").forward(request, response);
+            manejarError(request, response, e);
         }
+    }
+
+    private void manejarError(HttpServletRequest request, HttpServletResponse response, Exception e)
+            throws ServletException, IOException {
+        request.setAttribute("error", e.getMessage());
+        java.io.StringWriter sw = new java.io.StringWriter();
+        e.printStackTrace(new java.io.PrintWriter(sw));
+        request.setAttribute("stackTrace", sw.toString());
+        request.getRequestDispatcher("/WEB-INF/jspf/error.jsp").forward(request, response);
     }
 }

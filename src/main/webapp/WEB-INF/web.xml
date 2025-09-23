@@ -4,5 +4,31 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <display-name>Java-Web-Project</display-name>
+
+    <display-name>CafeteriaApp</display-name>
+
+    <!-- UsuarioController -->
+    <servlet>
+        <servlet-name>UsuarioController</servlet-name>
+        <servlet-class>com.cafeteria.controller.UsuarioController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsuarioController</servlet-name>
+        <url-pattern>/usuario</url-pattern>
+    </servlet-mapping>
+
+    <!-- (Ejemplo) LoginController -->
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>com.cafeteria.controller.LoginController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <!-- Sesión -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 </web-app>

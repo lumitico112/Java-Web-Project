@@ -9,13 +9,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Productos</title>
-    <%@ include file="/WEB-INF/views/includes/head.jspf" %>
+    <title>Pedidos</title>
+    <%@ include file="/WEB-INF/jspf/head.jspf" %>
 </head>
 <body>
 <div class="container py-5">
-    <h1 class="h3 mb-3">Productos</h1>
-    <!-- Contenido de productos -->
+    <h1 class="h3 mb-3">Pedidos</h1>
+    <!-- Contenido de pedidos -->
 </div>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

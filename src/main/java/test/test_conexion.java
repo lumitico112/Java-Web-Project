@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class test_conexion {
 
     public static void main(String[] args) {
-        System.out.println("Iniciando prueba de conexión EmpleadoController la base de datos...");
+        System.out.println("Iniciando prueba de conexión UsuarioController la base de datos...");
         try (Connection conn = Conexion.getConection()) {
             if (conn != null && !conn.isClosed()) {
                 System.out.println("Conexión establecida correctamente.");
