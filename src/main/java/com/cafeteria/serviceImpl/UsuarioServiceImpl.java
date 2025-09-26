@@ -7,6 +7,8 @@ import com.cafeteria.service.UsuarioService;
 
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioDAO usuarioDAO;
@@ -17,7 +19,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public boolean registrarUsuario(Usuario usuario) throws Exception {
+    public boolean registrarUsuario(Usuario usuario)  throws Exception {
         return usuarioDAO.create(usuario);
     }
 

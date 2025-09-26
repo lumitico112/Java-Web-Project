@@ -6,16 +6,16 @@ import com.cafeteria.enums.EstadoUsuario;
 import com.cafeteria.service.UsuarioService;
 import com.cafeteria.serviceImpl.UsuarioServiceImpl;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@WebServlet("/controller/UsuarioController")
 public class UsuarioController extends HttpServlet {
 
     private final UsuarioService usuarioService = new UsuarioServiceImpl();
@@ -35,6 +35,12 @@ public class UsuarioController extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
+
+        // Si viene desde "/registro" sin action, forzamos a mostrar formulario nuevo
+        String servletPath = request.getServletPath();
+        if (servletPath.equals("/registro") && (action == null || action.isEmpty())) {
+            action = "nuevo";
+        }
         if (action == null) action = "listar";
 
         try {
@@ -47,33 +53,22 @@ public class UsuarioController extends HttpServlet {
                 default -> listar(request, response);
             }
         } catch (Exception e) {
-            // Manejo centralizado de errores
-            request.setAttribute("error", e.getMessage());
-            request.setAttribute("exception", e);
-
-            java.io.StringWriter sw = new java.io.StringWriter();
-            e.printStackTrace(new java.io.PrintWriter(sw));
-            request.setAttribute("stackTrace", sw.toString());
-
-            request.getRequestDispatcher("/WEB-INF/jspf/error.jsp").forward(request, response);
+            manejarError(request, response, e);
         }
     }
-
-    // ======================
-    // Métodos privados CRUD
-    // ======================
 
     private void listar(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         List<Usuario> usuarios = usuarioService.listarUsuarios();
         request.setAttribute("usuarios", usuarios);
-        request.getRequestDispatcher("/WEB-INF/usuario-lista.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/usuario/lista.jsp").forward(request, response);
     }
 
     private void mostrarFormularioNuevo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/usuario-form.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
     }
+
 
     private void insertar(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -81,16 +76,23 @@ public class UsuarioController extends HttpServlet {
         usuario.setNombre(request.getParameter("nombre"));
         usuario.setApellido(request.getParameter("apellido"));
         usuario.setCorreo(request.getParameter("correo"));
-        usuario.setContrasena(request.getParameter("contrasena")); // encripta en el service
+        usuario.setContrasena(request.getParameter("contrasena"));
         usuario.setEstado(EstadoUsuario.ACTIVO);
         usuario.setFechaCreacion(LocalDateTime.now());
 
+        String idRolParam = request.getParameter("idRol");
         Rol rol = new Rol();
-        rol.setIdRol(Integer.parseInt(request.getParameter("idRol")));
+        if (idRolParam != null && !idRolParam.isEmpty()) {
+            rol.setIdRol(Integer.parseInt(idRolParam));
+        } else {
+            rol.setIdRol(3); //por defecto cliente
+        }
         usuario.setRol(rol);
 
         usuarioService.registrarUsuario(usuario);
-        response.sendRedirect(request.getContextPath() + "/usuario?action=listar");
+
+        request.setAttribute("mensajeExito", "Registro completado. Ahora puedes iniciar sesión.");
+        request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
     }
 
     private void mostrarEditar(HttpServletRequest request, HttpServletResponse response)
@@ -98,7 +100,7 @@ public class UsuarioController extends HttpServlet {
         Integer id = Integer.parseInt(request.getParameter("id"));
         Usuario usuario = usuarioService.buscarPorId(id);
         request.setAttribute("usuario", usuario);
-        request.getRequestDispatcher("/WEB-INF/usuario-form.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/usuario/form.jsp").forward(request, response);
     }
 
     private void actualizar(HttpServletRequest request, HttpServletResponse response)
@@ -108,8 +110,13 @@ public class UsuarioController extends HttpServlet {
         usuario.setNombre(request.getParameter("nombre"));
         usuario.setApellido(request.getParameter("apellido"));
         usuario.setCorreo(request.getParameter("correo"));
-        usuario.setContrasena(request.getParameter("contrasena"));
-        usuario.setEstado(com.cafeteria.enums.EstadoUsuario.valueOf(
+
+        String contrasena = request.getParameter("contrasena");
+        if (contrasena != null && !contrasena.isEmpty()) {
+            usuario.setContrasena(contrasena);
+        }
+
+        usuario.setEstado(EstadoUsuario.valueOf(
                 request.getParameter("estado").toUpperCase()
         ));
 
@@ -126,5 +133,17 @@ public class UsuarioController extends HttpServlet {
         Integer id = Integer.parseInt(request.getParameter("id"));
         usuarioService.eliminarUsuario(id);
         response.sendRedirect(request.getContextPath() + "/usuario?action=listar");
+    }
+
+    private void manejarError(HttpServletRequest request, HttpServletResponse response, Exception e)
+            throws ServletException, IOException {
+        request.setAttribute("error", e.getMessage());
+        request.setAttribute("exception", e);
+
+        java.io.StringWriter sw = new java.io.StringWriter();
+        e.printStackTrace(new java.io.PrintWriter(sw));
+        request.setAttribute("stackTrace", sw.toString());
+
+        request.getRequestDispatcher("/WEB-INF/views/error/error.jsp").forward(request, response);
     }
 }

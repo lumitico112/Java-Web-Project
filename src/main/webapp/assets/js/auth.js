@@ -104,33 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // --- Toast con credenciales de prueba ---
-    setTimeout(() => {
-        const credentialsInfo = document.createElement('div');
-        credentialsInfo.className = 'position-fixed bottom-0 start-0 p-3';
-        credentialsInfo.style.zIndex = '9999';
-        credentialsInfo.innerHTML = `
-            <div class="toast show" role="alert">
-                <div class="toast-header">
-                    <i class="fas fa-info-circle text-primary me-2"></i>
-                    <strong class="me-auto">Credenciales de Prueba</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-                </div>
-                <div class="toast-body">
-                    <small>
-                        <strong>Usuario:</strong> admin | <strong>Contraseña:</strong> admin123<br>
-                        <strong>Usuario:</strong> usuario | <strong>Contraseña:</strong> user123
-                    </small>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(credentialsInfo);
-
-        setTimeout(() => {
-            if (credentialsInfo.parentNode) credentialsInfo.remove();
-        }, 8000);
-    }, 2000);
-
     // --- Atajo con tecla Enter ---
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' && document.activeElement.tagName !== 'BUTTON') {

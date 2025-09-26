@@ -5,6 +5,8 @@ import com.cafeteria.dao.UsuarioDAO;
 import com.cafeteria.entity.Usuario;
 import com.cafeteria.entity.Rol;
 import com.cafeteria.enums.EstadoUsuario;
+import org.mindrot.jbcrypt.BCrypt;
+
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -23,7 +25,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             stmt.setString(1, usuario.getNombre());
             stmt.setString(2, usuario.getApellido());
             stmt.setString(3, usuario.getCorreo());
-            stmt.setString(4, usuario.getContrasena()); // BCrypt hash
+            stmt.setString(4, BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt()));
             stmt.setString(5, usuario.getEstado().name().toLowerCase());
             stmt.setTimestamp(6, Timestamp.valueOf(
                     usuario.getFechaCreacion() != null ? usuario.getFechaCreacion() : LocalDateTime.now()
@@ -36,18 +38,27 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public boolean update(Usuario usuario) throws SQLException {
-        String sql = "UPDATE Usuario SET nombre=?, apellido=?, correo=?, contrasena=?, estado=?, id_rol=? "
-                + "WHERE id_usuario=?";
+        StringBuilder sql = new StringBuilder("UPDATE Usuario SET nombre=?, apellido=?, correo=?, estado=?, id_rol=? ");
+        if (usuario.getContrasena() != null && !usuario.getContrasena().isEmpty()) {
+            sql.append(", contrasena=? ");
+        }
+        sql.append("WHERE id_usuario=?");
+
         try (Connection conn = Conexion.getConection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 
             stmt.setString(1, usuario.getNombre());
             stmt.setString(2, usuario.getApellido());
             stmt.setString(3, usuario.getCorreo());
-            stmt.setString(4, usuario.getContrasena()); // BCrypt hash
-            stmt.setString(5, usuario.getEstado().name().toLowerCase());
-            stmt.setInt(6, usuario.getRol().getIdRol());
-            stmt.setInt(7, usuario.getIdUsuario());
+            stmt.setString(4, usuario.getEstado().name().toLowerCase());
+            stmt.setInt(5, usuario.getRol().getIdRol());
+
+            if (usuario.getContrasena() != null && !usuario.getContrasena().isEmpty()) {
+                stmt.setString(6, BCrypt.hashpw(usuario.getContrasena(), BCrypt.gensalt()));
+                stmt.setInt(7, usuario.getIdUsuario());
+            } else {
+                stmt.setInt(6, usuario.getIdUsuario());
+            }
 
             return stmt.executeUpdate() > 0;
         }
@@ -125,7 +136,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                 rs.getString("nombre"),
                 rs.getString("apellido"),
                 rs.getString("correo"),
-                rs.getString("contrasena"), // aquí es la columna exacta
+                rs.getString("contrasena"),
                 EstadoUsuario.valueOf(rs.getString("estado").toUpperCase()),
                 rs.getTimestamp("fecha_creacion").toLocalDateTime(),
                 rol
