@@ -2,7 +2,7 @@
     <div class="container">
         <a class="navbar-brand fw-bold" href="${pageContext.request.contextPath}/">
             <i class="fas fa-coffee me-2"></i>
-            Cafetería El Aroma
+            Cafeteria El Aroma
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -11,7 +11,6 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <!-- secciones de index -->
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/#inicio">
                         <i class="fas fa-home me-1"></i>Inicio
@@ -33,7 +32,6 @@
                     </a>
                 </li>
             </ul>
-
             <ul class="navbar-nav">
                 <c:choose>
                     <c:when test="${sessionScope.usuario != null}">
@@ -56,7 +54,19 @@
                         </li>
                     </c:otherwise>
                 </c:choose>
+
+                <!-- Botón del sidebar, solo si hay sesión -->
+                <c:if test="${sessionScope.usuario != null}">
+                    <li class="nav-item">
+                        <button class="btn btn-outline-light ms-3" type="button"
+                                data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas"
+                                aria-controls="sidebarOffcanvas">
+                            <i class="fas fa-bars"></i> Menu
+                        </button>
+                    </li>
+                </c:if>
             </ul>
+
         </div>
     </div>
 </nav>

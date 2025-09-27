@@ -1,0 +1,69 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!-- Offcanvas Sidebar -->
+<div class="offcanvas offcanvas-start bg-coffee-dark text-white" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">
+            <i class="fas fa-cog me-2"></i>Panel de Control
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-0 bg-coffee-dark text-white">
+        <div class="list-group list-group-flush">
+
+            <!-- ADMIN -->
+            <c:if test="${sessionScope.usuario.rol.nombre == 'ADMIN'}">
+                <a href="${pageContext.request.contextPath}/usuario/perfil" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-user-cog me-2"></i>Editar Perfil
+                </a>
+                <a href="${pageContext.request.contextPath}/usuario" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-users me-2"></i>Gestionar Usuarios
+                </a>
+                <a href="${pageContext.request.contextPath}/productos" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-coffee me-2"></i>Productos
+                </a>
+                <a href="${pageContext.request.contextPath}/pedidos" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-receipt me-2"></i>Pedidos
+                </a>
+                <a href="${pageContext.request.contextPath}/reportes" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-chart-bar me-2"></i>Reportes
+                </a>
+                <a href="${pageContext.request.contextPath}/inventario" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-boxes me-2"></i>Inventario
+                </a>
+            </c:if>
+
+            <!-- EMPLEADO -->
+            <c:if test="${sessionScope.usuario.rol.nombre == 'EMPLEADO'}">
+                <a href="${pageContext.request.contextPath}/usuario/perfil" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-user-cog me-2"></i>Editar Perfil
+                </a>
+                <a href="${pageContext.request.contextPath}/pedidos/nuevo" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-plus-circle me-2"></i>Nuevo Pedido
+                </a>
+                <a href="${pageContext.request.contextPath}/pedidos" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-receipt me-2"></i>Mis Pedidos
+                </a>
+                <a href="${pageContext.request.contextPath}/caja" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-cash-register me-2"></i>Caja
+                </a>
+            </c:if>
+
+            <!-- CLIENTE -->
+            <c:if test="${sessionScope.usuario.rol.nombre == 'CLIENTE'}">
+                <a href="${pageContext.request.contextPath}/cliente/pedidos" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-shopping-bag me-2"></i>Mis Compras
+                </a>
+                <a href="${pageContext.request.contextPath}/cliente/reservas" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-calendar-check me-2"></i>Mis Reservas
+                </a>
+                <a href="${pageContext.request.contextPath}/usuario/perfil" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-user-cog me-2"></i>Editar Perfil
+                </a>
+                <a href="${pageContext.request.contextPath}/cliente/fidelizacion" class="list-group-item list-group-item-action text-white">
+                    <i class="fas fa-gift me-2"></i>Programa de Fidelizacion
+                </a>
+            </c:if>
+        </div>
+    </div>
+</div>

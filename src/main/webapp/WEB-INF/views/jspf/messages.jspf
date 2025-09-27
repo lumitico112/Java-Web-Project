@@ -4,7 +4,7 @@
     <script>
         Swal.fire({
             icon: 'success',
-            title: 'Éxito',
+            title: 'Exito',
             text: '${not empty mensajeExito ? mensajeExito : "Operacion completada exitosamente."}',
             timer: 3000,
             timerProgressBar: true,
@@ -30,7 +30,7 @@
     <script>
         Swal.fire({
             icon: 'warning',
-            title: 'Atención',
+            title: 'Atencion',
             text: '${loginError}',
             timer: 3500,
             timerProgressBar: true,
@@ -43,9 +43,49 @@
     <script>
         Swal.fire({
             icon: 'info',
-            title: 'Información',
-            text: '${not empty info ? info : "Información importante."}',
+            title: 'Informacion',
+            text: '${not empty info ? info : "Informacion importante."}',
             timer: 3500,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    </script>
+</c:if>
+<c:if test="${param.msg == 'welcome' && sessionScope.usuario != null}">
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Bienvenido',
+            text: 'Bienvenido, ${sessionScope.usuario.nombre} ${sessionScope.usuario.apellido}!',
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end'
+        });
+    </script>
+</c:if>
+
+<c:if test="${param.msg == 'actualizado'}">
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'Datos actualizados exitosamente.',
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    </script>
+</c:if>
+
+<c:if test="${param.msg == 'contrasena'}">
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: 'Contraseña cambiada exitosamente.',
+            timer: 3000,
             timerProgressBar: true,
             showConfirmButton: false
         });

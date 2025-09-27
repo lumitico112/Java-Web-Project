@@ -6,6 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+/**
+ *
+ * @author Luismi
+ */
 
 @Data
 @NoArgsConstructor

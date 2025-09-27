@@ -4,7 +4,7 @@
 <html lang="es">
 <head>
     <title>Error</title>
-    <%@ include file="/WEB-INF/jspf/head.jspf" %>
+    <%@ include file="/WEB-INF/views/jspf/head.jspf" %>
 </head>
 <body class="bg-light">
 <div class="container py-5">

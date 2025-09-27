@@ -54,7 +54,7 @@ public class LoginController extends HttpServlet {
             Usuario usuario = loginService.autenticar(identifier.trim(), password);
 
             if (usuario == null) {
-                request.setAttribute("loginError", "Credenciales inválidas.");
+                request.setAttribute("loginError", "Credenciales invalidas.");
                 request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
                 return;
             }
@@ -62,7 +62,16 @@ public class LoginController extends HttpServlet {
             // Autenticación correcta
             HttpSession session = request.getSession(true);
             session.setAttribute("usuario", usuario);
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+
+            //Redirección según el rol
+            String targetPage;
+            if ("ADMIN".equalsIgnoreCase(usuario.getRol().getNombre())) {
+                targetPage = "/dashboard.jsp";
+            } else {
+                targetPage = "/index.jsp";
+            }
+
+            response.sendRedirect(request.getContextPath() + targetPage + "?msg=welcome");
 
         } catch (Exception e) {
             manejarError(request, response, e);

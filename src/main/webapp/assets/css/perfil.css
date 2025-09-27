@@ -1,0 +1,77 @@
+/* perfil.css - Estilos para la página de edición de perfil */
+
+body {
+    padding-top: 76px;
+    background-color: var(--coffee-light) !important;
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--coffee-dark), var(--coffee-primary)) !important;
+    border-bottom: 3px solid var(--coffee-accent);
+}
+
+.form-label {
+    color: var(--coffee-dark);
+    font-weight: 600;
+}
+
+.form-control[readonly] {
+    background-color: #f8f9fa;
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--coffee-primary);
+    box-shadow: 0 0 0 0.25rem rgba(139, 69, 19, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--coffee-primary), var(--coffee-dark));
+    border: none;
+    font-weight: 600;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--coffee-dark), var(--coffee-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
+}
+
+.btn-outline-secondary {
+    border: 2px solid var(--coffee-secondary);
+    color: var(--coffee-primary);
+    font-weight: 600;
+    padding: 12px 24px;
+}
+
+.btn-outline-secondary:hover {
+    background: var(--coffee-secondary);
+    color: var(--coffee-dark);
+    transform: translateY(-2px);
+}
+
+hr {
+    border-color: var(--coffee-accent);
+    opacity: 0.7;
+}
+
+.text-coffee-primary {
+    color: var(--coffee-primary) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1.5rem !important;
+    }
+    .btn-lg {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .d-md-flex {
+        flex-direction: column;
+    }
+}

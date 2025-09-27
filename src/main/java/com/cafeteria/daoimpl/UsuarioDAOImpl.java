@@ -2,6 +2,7 @@ package com.cafeteria.daoimpl;
 
 import com.cafeteria.config.Conexion;
 import com.cafeteria.dao.UsuarioDAO;
+import com.cafeteria.entity.PerfilCliente;
 import com.cafeteria.entity.Usuario;
 import com.cafeteria.entity.Rol;
 import com.cafeteria.enums.EstadoUsuario;
@@ -12,6 +13,11 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ *
+ * @author Luismi
+ */
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
@@ -142,4 +148,41 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                 rol
         );
     }
+
+    @Override
+    public PerfilCliente buscarPerfilCliente(int idUsuario) throws Exception {
+        String sql = "SELECT id_usuario, telefono, direccion, puntos_fidelizacion " +
+                "FROM Perfil_Cliente WHERE id_usuario=?";
+        try (Connection conn = Conexion.getConection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    PerfilCliente perfil = new PerfilCliente();
+                    perfil.setIdUsuario(rs.getInt("id_usuario"));
+                    perfil.setTelefono(rs.getString("telefono"));
+                    perfil.setDireccion(rs.getString("direccion"));
+                    perfil.setPuntosFidelizacion(rs.getInt("puntos_fidelizacion"));
+                    return perfil;
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean actualizarPerfilCliente(PerfilCliente perfil) throws Exception {
+        String sql = "UPDATE Perfil_Cliente SET telefono=?, direccion=?, puntos_fidelizacion=? " +
+                "WHERE id_usuario=?";
+        try (Connection conn = Conexion.getConection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, perfil.getTelefono());
+            stmt.setString(2, perfil.getDireccion());
+            stmt.setInt(3, perfil.getPuntosFidelizacion());
+            stmt.setInt(4, perfil.getIdUsuario());
+
+            return stmt.executeUpdate() > 0;
+        }
+    }
+
 }

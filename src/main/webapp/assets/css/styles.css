@@ -17,6 +17,10 @@
     position: relative;
 }
 
+.bg-coffee-dark {
+    background-color: #4B2208 !important;
+}
+
 .bg-coffee::before {
     content: '';
     position: absolute;
@@ -166,4 +170,16 @@
     .card-body { padding: 2rem !important; }
     .card-header h2 { font-size: 1.5rem; }
     .fa-coffee { font-size: 2rem !important; }
+}
+/* ==== FIX SIDEBAR ===== */
+.offcanvas .list-group-item {
+    background-color: transparent !important; /* quita el blanco */
+    border: none !important; /* elimina líneas divisorias grises */
+    color: #fff !important; /* texto blanco */
+}
+
+/* Hover para mejor experiencia */
+.offcanvas .list-group-item:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--coffee-accent) !important;
 }

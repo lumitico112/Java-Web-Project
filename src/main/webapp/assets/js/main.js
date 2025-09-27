@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                     </div>
                     <div class="toast-body">
-                        Gracias por visitar Cafetería El Aroma. ¡Esperamos que disfrutes navegando por nuestro sitio!
+                        Gracias por visitar Cafeteria El Aroma. ¡Esperamos que disfrutes navegando por nuestro sitio!
                     </div>
                 </div>
             `;
@@ -234,4 +234,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Iniciar después de un breve delay
         setTimeout(typeEffect, 500);
     }
+});
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const welcomeMsg = document.getElementById('welcomeMessage');
+    if (welcomeMsg) {
+    setTimeout(() => {
+    welcomeMsg.style.transition = 'opacity 0.5s';
+    welcomeMsg.style.opacity = '0';
+    setTimeout(() => welcomeMsg.remove(), 500);
+}, 2000); // 2 segundos
+}
 });

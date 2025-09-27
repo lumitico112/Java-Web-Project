@@ -2,12 +2,11 @@ package com.cafeteria.serviceImpl;
 
 import com.cafeteria.dao.UsuarioDAO;
 import com.cafeteria.daoimpl.UsuarioDAOImpl;
+import com.cafeteria.entity.PerfilCliente;
 import com.cafeteria.entity.Usuario;
 import com.cafeteria.service.UsuarioService;
 
 import java.util.List;
-
-import org.mindrot.jbcrypt.BCrypt;
 
 public class UsuarioServiceImpl implements UsuarioService {
 
@@ -46,5 +45,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public List<Usuario> listarUsuarios() throws Exception {
         return usuarioDAO.readAll();
+    }
+    @Override
+    public PerfilCliente buscarPerfilCliente(int idUsuario) throws Exception {
+        return usuarioDAO.buscarPerfilCliente(idUsuario);
+    }
+    @Override
+    public boolean actualizarPerfilCliente(PerfilCliente perfil) throws Exception {
+        return usuarioDAO.actualizarPerfilCliente(perfil);
     }
 }

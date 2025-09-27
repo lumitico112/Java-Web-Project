@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="es">
@@ -11,7 +11,6 @@
 <body>
 
 <%@ include file="/WEB-INF/views/jspf/navbar.jspf" %>
-
 <!-- Hero Section -->
 <section id="inicio" class="hero-section">
     <div class="hero-overlay">
@@ -247,7 +246,13 @@
     </div>
 </section>
 
+<%@ include file="/WEB-INF/views/jspf/messages.jspf" %>
+
+<%@ include file="/WEB-INF/views/jspf/sidebar-offcanvas.jspf" %>
+
 <%@ include file="/WEB-INF/views/jspf/footer.jspf" %>
+
+
 
 </body>
 </html>

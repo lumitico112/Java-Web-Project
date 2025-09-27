@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author Docente
+ * @author Luismi
  */
 public interface GenericDao<T> {
     boolean create(T t) throws SQLException;

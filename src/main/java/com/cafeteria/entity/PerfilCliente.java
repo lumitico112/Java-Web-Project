@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
  *
  * @author Luismi
  */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rol {
-    private Integer idRol;
-    private String nombre;
-    private String descripcion;
+public class PerfilCliente {
+    private int idUsuario;
+    private String telefono;
+    private String direccion;
+    private int puntosFidelizacion;
 }
+
