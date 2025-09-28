@@ -5,7 +5,7 @@ import com.cafeteria.dao.UsuarioDAO;
 import com.cafeteria.entity.PerfilCliente;
 import com.cafeteria.entity.Usuario;
 import com.cafeteria.entity.Rol;
-import com.cafeteria.enums.EstadoUsuario;
+import com.cafeteria.enums.Estado;
 import org.mindrot.jbcrypt.BCrypt;
 
 
@@ -143,7 +143,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                 rs.getString("apellido"),
                 rs.getString("correo"),
                 rs.getString("contrasena"),
-                EstadoUsuario.valueOf(rs.getString("estado").toUpperCase()),
+                Estado.valueOf(rs.getString("estado").toUpperCase()),
                 rs.getTimestamp("fecha_creacion").toLocalDateTime(),
                 rol
         );

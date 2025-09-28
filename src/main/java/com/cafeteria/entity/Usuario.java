@@ -1,6 +1,6 @@
 package com.cafeteria.entity;
 
-import com.cafeteria.enums.EstadoUsuario;
+import com.cafeteria.enums.Estado;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class Usuario {
     private String apellido;
     private String correo;
     private String contrasena;
-    private EstadoUsuario estado;
+    private Estado estado;
     private LocalDateTime fechaCreacion;
     private Rol rol;
 }

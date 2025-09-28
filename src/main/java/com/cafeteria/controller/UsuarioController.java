@@ -3,7 +3,7 @@ package com.cafeteria.controller;
 import com.cafeteria.entity.PerfilCliente;
 import com.cafeteria.entity.Rol;
 import com.cafeteria.entity.Usuario;
-import com.cafeteria.enums.EstadoUsuario;
+import com.cafeteria.enums.Estado;
 import com.cafeteria.service.UsuarioService;
 import com.cafeteria.serviceImpl.UsuarioServiceImpl;
 
@@ -75,7 +75,7 @@ public class UsuarioController extends HttpServlet {
         usuario.setApellido(request.getParameter("apellido"));
         usuario.setCorreo(request.getParameter("correo"));
         usuario.setContrasena(request.getParameter("contrasena"));
-        usuario.setEstado(EstadoUsuario.ACTIVO);
+        usuario.setEstado(Estado.ACTIVO);
         usuario.setFechaCreacion(LocalDateTime.now());
 
         String idRolParam = request.getParameter("idRol");
@@ -218,7 +218,7 @@ public class UsuarioController extends HttpServlet {
             String estadoParam = request.getParameter("estado");
             usuario.setEstado(
                     (estadoParam != null && !estadoParam.isEmpty())
-                            ? EstadoUsuario.valueOf(estadoParam.toUpperCase())
+                            ? Estado.valueOf(estadoParam.toUpperCase())
                             : existente.getEstado()
             );
 
